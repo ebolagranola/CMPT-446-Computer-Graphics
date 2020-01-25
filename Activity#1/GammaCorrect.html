@@ -29,10 +29,6 @@
       width: 720px;
       margin: 1em 0;
     }
-
-    output {
-      color: red;
-    }
   </style>
 </head>
 
@@ -67,6 +63,12 @@
       let gamma = (Math.log(inputIntensity))/(Math.log(a)); /* TODO Compute gamma from the input intensity. */
       console.log("Gamma: " + gamma);
       document.getElementById("gamma").textContent = gamma.toFixed(2);
+
+      if (inputIntensity < 128) {
+        document.getElementById("gamma").style.color = "white";
+      } else {
+        document.getElementById("gamma").style.color = "black";
+      }
     }
 
     window.onload = render(128);
