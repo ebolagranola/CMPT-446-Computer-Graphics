@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Graphics Lab - Gamma Correction</title>
+  <meta charset="utf-8" />
+  <style>
+    html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      text-align: center;
+      font-size: 150%;
+    }
+
+    #gray-reference {
+      background: url("checker.png") repeat;
+      margin: auto;
+      width: 640px;
+      height: 640px;
+    }
+
+    form {
+      width: 720px;
+      margin: auto;
+    }
+
+    input {
+      width: 720px;
+      margin: 1em 0;
+    }
+
+    output {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>Adjust the slider until the value/lightness of the background appears to match that of the square
+    in the center. The number displayed beneath the slider is an estimate for your monitor's gamma.</p>
+
+  <div id="gray-reference"></div>
+
+  <form>
+    <input type="range" min="0" max="255" step="1" value="128" onchange="render(this.value)" />
+    <output id="gamma"></output>
+  </form>
+
+  <script>
+    /* Helper function to convert a single grayscale number to a CSS color value */
+    function valueToGray(v) {
+      return "rgb(" + v + "," + v + "," + v + ")";
+    }
+
+    /* Recolors the background based on the slider value and computes the gamma parameter. */
+    function render(inputIntensity) {
+      /* Set page background color based on the slider value. */
+      document.body.style.backgroundColor = valueToGray(inputIntensity);
+      console.log("Input: " + inputIntensity);
+
+      /* Compute and display the corresponding gamma parameter. */
+      let a = (inputIntensity/255);
+      console.log("a: " + a);
+
+      let gamma = (Math.log(inputIntensity))/(Math.log(a)); /* TODO Compute gamma from the input intensity. */
+      console.log("Gamma: " + gamma);
+      document.getElementById("gamma").textContent = gamma.toFixed(2);
+    }
+
+    window.onload = render(128);
+  </script>
+
+</body></html>

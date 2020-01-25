@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Graphics Lab - Alpha Compositing</title>
+  <meta charset="utf-8" />
+  <style>
+    html {
+      background-color: black;
+    }
+
+    canvas,
+    input {
+      display: block;
+      margin: auto;
+    }
+
+    canvas {
+      outline: 1px solid gray;
+    }
+
+    input {
+      width: 720px;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="viewport" width="1280" height="720">
+    Your browser does not support HTML5! Upgrade now, you neanderthal!
+  </canvas>
+  <form>
+    <input id="gamma" type="range" min="0" max="1" step="0.05" value="0.5" onchange="render(this.value)" />
+    <<output></output>
+  </form>
+
+  <script>
+    /* Helper function to convert an number array to a CSS color value */
+    function arrayToColor(rgb) {
+      return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+    }
+
+    /* Redraws the canvas based on the given alpha (opacity) value. */
+    function render(alpha) {
+      const canvas = document.getElementById("viewport");
+      const ctx = canvas.getContext('2d');
+
+      color1 = [255, 0, 255]; // Pink
+      ctx.fillStyle = arrayToColor(color1);
+      ctx.fillRect(200, 100, 200, 160);
+
+      color2 = [255, 255, 0]; // Yellow
+      ctx.fillStyle = arrayToColor(color2);
+      ctx.fillRect(640, 150, 100, 480);
+
+      color3 = [0, 216, 255]; // Blue
+      ctx.fillStyle = arrayToColor(color3);
+      ctx.fillRect(320, 200, 640, 240);
+
+      /* TODO Draw two rectangles on top, representing the intersections, so
+        that it appears as though the slider adjusts blue rectangle's opacity.
+        Note that you must apply the compositing formula separately for each
+        of the three color channels - red, green, and blue. */
+
+        /* The book explains how we can achieve an alpha effect by taking an
+          input value within [0, 1]. By using this alpha value with the
+          intensity values of each RGB color channel in an equation, we can
+          display a sort of alpha blend. Given Cf as the forground color and
+          Cb as the background color, we can use the equation:
+          ((alpha *Cf) + (1 - alpha) * Cb)
+          we can calculate the value to return for the specific color channel.
+
+        */
+        color4 = [(alpha*0) + (1 - alpha)*255,
+                  (alpha*216) + (1 - alpha)*0,
+                  (alpha*255) + (1 - alpha)*255]; // Blue/Pink
+        ctx.fillStyle = arrayToColor(color4);
+        ctx.fillRect(320, 200, 80, 60);
+
+        color5 = [(alpha*0) + (1 - alpha)*255,
+                  (alpha*216) + (1 - alpha)*255,
+                  (alpha*255) + (1 - alpha)*0]; // Blue/Yellow
+        ctx.fillStyle = arrayToColor(color5);
+        ctx.fillRect(640, 200, 100, 240);
+    }
+
+    window.onload = render(0.5);
+  </script>
+
+</body></html>
