@@ -57,6 +57,10 @@
       console.log("Input: " + inputIntensity);
 
       /* Compute and display the corresponding gamma parameter. */
+      /* An intensity of 0 gives a gamma of NaN and an intensity of 1 gives a
+        gamma of infinity. This should be okay becuase we don't need to gamma
+        correct these values since they are already perfect :)
+      */
       let a = (inputIntensity/255);
       console.log("a: " + a);
 
