@@ -57,17 +57,40 @@
       console.log("Input: " + inputIntensity);
 
       /* Compute and display the corresponding gamma parameter. */
+
       /* An intensity of 0 gives a gamma of NaN and an intensity of 1 gives a
         gamma of infinity. This should be okay becuase we don't need to gamma
         correct these values since they are already perfect :)
       */
+
+      /*
+        We need a way of mapping the values from 0-255 so we divide the input
+        value by it's largest possible (255) to convert the value to a number
+        between 0 and 1
+      */
       let a = (inputIntensity/255);
       console.log("a: " + a);
 
+<<<<<<< HEAD
       let gamma = (Math.log(0.5))/(Math.log(a)); /* TODO Compute gamma from the input intensity. */
+=======
+      /*
+        From the book we can use the formula: gamma = ln(input)/ln(a)
+      */
+      let gamma = (Math.log(inputIntensity))/(Math.log(a)); /* TODO Compute gamma from the input intensity. */
+>>>>>>> 6ef1947a405fe6e166a5a7e260b0f40abbb9cfd5
       console.log("Gamma: " + gamma);
+
+      /*
+        I wanted to keep it clean and only display two decimal places
+      */
       document.getElementById("gamma").textContent = gamma.toFixed(2);
 
+      /*
+        Another QOL improvement to change the color of the displayed gamma
+        depending on the current input intensity so that the text is able to be
+        seen on any intensity
+      */
       if (inputIntensity < 128) {
         document.getElementById("gamma").style.color = "white";
       } else {
