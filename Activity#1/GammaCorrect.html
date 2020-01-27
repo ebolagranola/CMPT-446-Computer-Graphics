@@ -64,7 +64,7 @@
       let a = (inputIntensity/255);
       console.log("a: " + a);
 
-      let gamma = (Math.log(inputIntensity))/(Math.log(a)); /* TODO Compute gamma from the input intensity. */
+      let gamma = (Math.log(0.5))/(Math.log(a)); /* TODO Compute gamma from the input intensity. */
       console.log("Gamma: " + gamma);
       document.getElementById("gamma").textContent = gamma.toFixed(2);
 
